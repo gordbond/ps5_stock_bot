@@ -16,6 +16,15 @@ client.login(process.env.BOT_TOKEN);
 var page = null;
 var browser = null;
 
+//TEST BOT IS WORKING
+client.on('message', msg => { // Message function
+    if (msg.author.bot) return; // Ignore all bots
+    if (msg.content.startsWith(config.prefix)) return; // It always has to starts with the prefix which is '!'
+
+    if (msg.content.startsWith(config.prefix + "ping")) { // When a player does '!ping'
+        msg.reply("Pong!") // The bot will say @Author, Pong!
+    }
+});
 
 
 puppeteer.launch({
