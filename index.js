@@ -13,8 +13,8 @@ require('dotenv').config();
 const client = new Discord.Client();
 
 client.login(process.env.BOT_TOKEN);
-var page = null;
-var browser = null;
+//var page = null;
+//var browser = null;
 
 // //TEST BOT IS WORKING
 // client.on('message', msg => { // Message function
