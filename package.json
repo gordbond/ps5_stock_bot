@@ -1,0 +1,15 @@
+{
+  "name": "js_bot_tutorial",
+  "version": "1.0.0",
+  "description": "Testing out puppeteer in a js bot",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Gord Bond",
+  "license": "ISC",
+  "dependencies": {
+    "discord.js": "^12.5.1",
+    "puppeteer": "^5.5.0"
+  }
+}
