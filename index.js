@@ -87,9 +87,9 @@ async function checkIfAvailableAtBestBuy(page) {
     //True if disabled button class present
     const disabledTagIsPresent = await page.$(buttonElement)
     //If disabled tag is present there are no ps5s available
-    return disabledTagIsPresent ? false : true
+    //return disabledTagIsPresent ? false : true
     //JUST FOR DEBUGGING
-    //return disabledTagIsPresent ? true : false
+    return disabledTagIsPresent ? true : false
 }
 
 /**
