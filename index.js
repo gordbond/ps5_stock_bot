@@ -32,7 +32,7 @@ puppeteer.launch({
     headless: true
 }).then(async browser => {
     //log('hi! this program will check if PS5 is available on sites every 30 seconds')
-    log('Bot started...Checking PS5 stock')
+    //log('Bot started...Checking PS5 stock')
     console.log('Bot started...Checking PS5 stock')
     setInterval(async () => ps5AvailabilityResult(browser), 30000)
     await ps5AvailabilityResult(browser)
@@ -87,9 +87,9 @@ async function checkIfAvailableAtBestBuy(page) {
     //True if disabled button class present
     const disabledTagIsPresent = await page.$(buttonElement)
     //If disabled tag is present there are no ps5s available
-    //return disabledTagIsPresent ? false : true
+    return disabledTagIsPresent ? false : true
     //JUST FOR DEBUGGING
-    return disabledTagIsPresent ? true : false
+    //return disabledTagIsPresent ? true : false
 }
 
 /**
