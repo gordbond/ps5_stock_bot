@@ -31,8 +31,6 @@ puppeteer.launch({
     args: ['--no-sandbox'],
     headless: true
 }).then(async browser => {
-    //log('hi! this program will check if PS5 is available on sites every 30 seconds')
-    //log('Bot started...Checking PS5 stock')
     console.log('Bot started...Checking PS5 stock')
     setInterval(async () => ps5AvailabilityResult(browser), 30000)
     await ps5AvailabilityResult(browser)
