@@ -50,6 +50,8 @@ async function ps5AvailabilityResult(browser) {
     if (await checkIfAvailableAtBestBuy(page1))
     {
         channel.send("PS5 Available at Best Buy! --> https://www.bestbuy.ca/en-ca/product/playstation-5-digital-edition-console-online-only/14962184");
+    }else{
+        log(`BestBuy PS5 - ${chalk.red('UNAVAILABLE')}`)
     }
     //Send message if available at The Source
     if (await checkIfAvailableAtTheSource(page2)) 
@@ -57,6 +59,8 @@ async function ps5AvailabilityResult(browser) {
         
         channel.send("PS5 Available at The Source! -->  https://www.thesource.ca/en-ca/gaming/playstation/ps5/playstation%c2%ae5-digital-edition-console/p/108090498");
         
+    }else{
+        log(`The Source PS5 - ${chalk.red('UNAVAILABLE')}`)
     }
 }
 /**
