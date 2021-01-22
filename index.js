@@ -42,7 +42,7 @@ puppeteer.launch({
 async function ps5AvailabilityResult(browser) {
     const page1 = await browser.newPage()
     const page2 = await browser.newPage()
-    page.setViewport({
+    page1.setViewport({
         width: 1280,
         height: 800,
         isMobile: false,
