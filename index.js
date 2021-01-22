@@ -40,30 +40,30 @@ puppeteer.launch({
 })
 
 async function ps5AvailabilityResult(browser) {
-    const page = await browser.newPage()
-    //const page2 = await browser.newPage()
+    const page1 = await browser.newPage()
+    const page2 = await browser.newPage()
     page.setViewport({
         width: 1280,
         height: 800,
         isMobile: false,
     });
-    // page2.setViewport({
-    //     width: 1280,
-    //     height: 800,
-    //     isMobile: false,
-    // });
+    page2.setViewport({
+        width: 1280,
+        height: 800,
+        isMobile: false,
+    });
     
     const channel = client.channels.cache.get(config.CHANNEL_ID);
     
     //Send message if available at BestBuy
-    if (await checkIfAvailableAtBestBuy(page))
+    if (await checkIfAvailableAtBestBuy(page1))
     {
         channel.send("PS5 Available at Best Buy! --> https://www.bestbuy.ca/en-ca/product/playstation-5-digital-edition-console-online-only/14962184");
     }else{
         //console.log("Best Buy PS5 - unavailable.")
     }
     //Send message if available at The Source
-    if (await checkIfAvailableAtTheSource(page)) 
+    if (await checkIfAvailableAtTheSource(page2)) 
     {
         
         channel.send("PS5 Available at The Source! -->  https://www.thesource.ca/en-ca/gaming/playstation/ps5/playstation%c2%ae5-digital-edition-console/p/108090498");
