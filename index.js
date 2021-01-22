@@ -1,20 +1,22 @@
-const puppeteer = require("puppeteer");
+// const puppeteer = require("puppeteer");
+const puppeteer = require('puppeteer-extra')
+
+// add stealth plugin and use defaults (all evasion techniques)
+const StealthPlugin = require('puppeteer-extra-plugin-stealth')
+puppeteer.use(StealthPlugin())
+
+
 const Discord = require("discord.js");
 const config = require("./config.json");
+require('dotenv').config();
 
 const client = new Discord.Client();
 var channel; 
-
-
-
-
-
-client.login(config.BOT_TOKEN);
-
-
-
+client.login(process.env.BOT_TOKEN);
 var page = null;
 var browser = null;
+
+
 
 puppeteer.launch({
     args: ['--no-sandbox'],
@@ -29,30 +31,33 @@ puppeteer.launch({
 })
 
 async function ps5AvailabilityResult(browser) {
-    //log('------------------------')
-    const page = await browser.newPage()
-    page.setViewport({
+    const page1 = await browser.newPage()
+    const page2 = await browser.newPage()
+    page1.setViewport({
+        width: 1280,
+        height: 800,
+        isMobile: false,
+    });
+    page2.setViewport({
         width: 1280,
         height: 800,
         isMobile: false,
     });
     
-    //log(`BestBuy - ${await checkIfAvailableonWalMart(page) ? chalk.green('AVAILABLE') : chalk.red('UNAVAILABLE') }`)
-    //var messageFromBestBuy = `BestBuy - ${await checkIfAvailableAtWalMart(page) ? 'AVAILABLE' : 'UNAVAILABLE'}`;
     channel = client.channels.cache.get(config.CHANNEL_ID);
+    
     //Send message if available at BestBuy
-    if (await checkIfAvailableAtBestBuy(page))
+    if (await checkIfAvailableAtBestBuy(page1))
     {
         channel.send("PS5 Available at Best Buy! --> https://www.bestbuy.ca/en-ca/product/playstation-5-digital-edition-console-online-only/14962184");
     }
-    if (await checkIfAvailableAtTheSource(page)) 
+    //Send message if available at The Source
+    if (await checkIfAvailableAtTheSource(page2)) 
     {
+        
         channel.send("PS5 Available at The Source! -->  https://www.thesource.ca/en-ca/gaming/playstation/ps5/playstation%c2%ae5-digital-edition-console/p/108090498");
+        
     }
-
-    
-    
-
 }
 /**
  * Best Buy Availability Checker
@@ -65,29 +70,44 @@ async function checkIfAvailableAtBestBuy(page) {
     page.setJavaScriptEnabled(false) 
     await page.goto(pageUrl)
     //True if disabled button class present
-    const ps5Available = await page.$(buttonElement)
-    //If disabled class is not present that means the but is enabled and therefore available
-    return ps5Available ? false : true
-    //return ps5Available ? true : false
+    const disabledTagIsPresent = await page.$(buttonElement)
+    //If disabled tag is present there are no ps5s available
+    return disabledTagIsPresent ? false : true
+    //JUST FOR DEBUGGING
+    //return disabledTagIsPresent ? true : false
 }
 
 /**
  * The Source Availability Checker
+ * THE SOURCE CHECKS FOR HEADLESS
  * @param {} page 
  */
 async function checkIfAvailableAtTheSource(page) {
     const pageUrl = 'https://www.thesource.ca/en-ca/gaming/playstation/ps5/playstation%c2%ae5-digital-edition-console/p/108090498';
-    const buttonElement = 'disabled-button'
+    const buttonElement = '.disabled-button'
+    const outOfStockElement = ".outOfStock"
     //prevent captcha issues apparently  
     page.setJavaScriptEnabled(false)
     await page.goto(pageUrl)
-    //True if disabled button class present
-    const ps5Available = await page.$(buttonElement)
-    //If disabled class is not present that means the but is enabled and therefore available
-    return buttonAvailable ? false : true
-    //return ps5Available ? true : false
+    
+    
+    const disabledTagIsPresent = await page.$(buttonElement);
+    const outOfStockTagIsPresent = await page.$(outOfStockElement);
+
+    if( !outOfStockTagIsPresent && !disabledTagIsPresent){
+        return true;
+    }else{
+        return false;
+    }
+    //return disabledTagIsPresent ? false : true
+    //Just for debugging
+    //return disabledTagIsPresent ? true : false
+   
 }
 
 
 
-    
+    //log(`BestBuy - ${await checkIfAvailableonWalMart(page) ? chalk.green('AVAILABLE') : chalk.red('UNAVAILABLE') }`)
+    // var messageFromBestBuy = `BestBuy - ${await checkIfAvailableAtBestBuy(page) ? 'AVAILABLE' : 'UNAVAILABLE'}`;
+    // channel.send(messageFromBestBuy);
+    //channel.send("Test");
