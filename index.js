@@ -14,18 +14,7 @@ const client = new Discord.Client();
 
 client.login(process.env.BOT_TOKEN);
 //var page = null;
-//var browser = null;
-
-// //TEST BOT IS WORKING
-// client.on('message', msg => { // Message function
-//     if (msg.author.bot) return; // Ignore all bots
-//     if (msg.content.startsWith(config.prefix)) return; // It always has to starts with the prefix which is '!'
-
-//     if (msg.content.startsWith(config.prefix + "ping")) { // When a player does '!ping'
-//         msg.reply("Pong!") // The bot will say @Author, Pong!
-//     }
-// });
-
+//const browser;
 
 puppeteer.launch({
     args: ['--no-sandbox'],
@@ -40,13 +29,13 @@ puppeteer.launch({
 })
 
 async function ps5AvailabilityResult(browser) {
-    const page1 = await browser.newPage()
+    //const page1 = await browser.newPage()
     const page2 = await browser.newPage()
-    page1.setViewport({
-        width: 1280,
-        height: 800,
-        isMobile: false,
-    });
+    // page1.setViewport({
+    //     width: 1280,
+    //     height: 800,
+    //     isMobile: false,
+    // });
     page2.setViewport({
         width: 1280,
         height: 800,
@@ -56,12 +45,12 @@ async function ps5AvailabilityResult(browser) {
     const channel = client.channels.cache.get(config.CHANNEL_ID);
     
     //Send message if available at BestBuy
-    if (await checkIfAvailableAtBestBuy(page1))
-    {
-        channel.send("PS5 Available at Best Buy! --> https://www.bestbuy.ca/en-ca/product/playstation-5-digital-edition-console-online-only/14962184");
-    }else{
-        //console.log("Best Buy PS5 - unavailable.")
-    }
+    // if (await checkIfAvailableAtBestBuy(page1))
+    // {
+    //     channel.send("PS5 Available at Best Buy! --> https://www.bestbuy.ca/en-ca/product/playstation-5-digital-edition-console-online-only/14962184");
+    // }else{
+    //     //console.log("Best Buy PS5 - unavailable.")
+    // }
     //Send message if available at The Source
     if (await checkIfAvailableAtTheSource(page2)) 
     {
@@ -76,19 +65,19 @@ async function ps5AvailabilityResult(browser) {
  * Best Buy Availability Checker
  * @param {*} page 
  */
-async function checkIfAvailableAtBestBuy(page) {
-    const pageUrl = 'https://www.bestbuy.ca/en-ca/product/playstation-5-digital-edition-console-online-only/14962184';
-    const buttonElement = '.disabled_XY3i_'
-    //prevent captcha issues apparently  
-    page.setJavaScriptEnabled(false) 
-    await page.goto(pageUrl)
-    //True if disabled button class present
-    const disabledTagIsPresent = await page.$(buttonElement)
-    //If disabled tag is present there are no ps5s available
-    return disabledTagIsPresent ? false : true
-    //JUST FOR DEBUGGING
-    //return disabledTagIsPresent ? true : false
-}
+// async function checkIfAvailableAtBestBuy(page) {
+//     const pageUrl = 'https://www.bestbuy.ca/en-ca/product/playstation-5-digital-edition-console-online-only/14962184';
+//     const buttonElement = '.disabled_XY3i_'
+//     //prevent captcha issues apparently  
+//     page.setJavaScriptEnabled(false) 
+//     await page.goto(pageUrl)
+//     //True if disabled button class present
+//     const disabledTagIsPresent = await page.$(buttonElement)
+//     //If disabled tag is present there are no ps5s available
+//     return disabledTagIsPresent ? false : true
+//     //JUST FOR DEBUGGING
+//     //return disabledTagIsPresent ? true : false
+// }
 
 /**
  * The Source Availability Checker
