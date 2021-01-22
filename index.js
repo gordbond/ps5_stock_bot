@@ -9,9 +9,9 @@ puppeteer.use(StealthPlugin())
 const Discord = require("discord.js");
 const config = require("./config.json");
 require('dotenv').config();
-
+// const channel; 
 const client = new Discord.Client();
-const channel; 
+
 client.login(process.env.BOT_TOKEN);
 var page = null;
 var browser = null;
@@ -53,7 +53,7 @@ async function ps5AvailabilityResult(browser) {
         isMobile: false,
     });
     
-    channel = client.channels.cache.get(config.CHANNEL_ID);
+    const channel = client.channels.cache.get(config.CHANNEL_ID);
     
     //Send message if available at BestBuy
     if (await checkIfAvailableAtBestBuy(page1))
