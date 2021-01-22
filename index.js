@@ -11,20 +11,20 @@ const config = require("./config.json");
 require('dotenv').config();
 
 const client = new Discord.Client();
-var channel; 
+const channel; 
 client.login(process.env.BOT_TOKEN);
 var page = null;
 var browser = null;
 
-//TEST BOT IS WORKING
-client.on('message', msg => { // Message function
-    if (msg.author.bot) return; // Ignore all bots
-    if (msg.content.startsWith(config.prefix)) return; // It always has to starts with the prefix which is '!'
+// //TEST BOT IS WORKING
+// client.on('message', msg => { // Message function
+//     if (msg.author.bot) return; // Ignore all bots
+//     if (msg.content.startsWith(config.prefix)) return; // It always has to starts with the prefix which is '!'
 
-    if (msg.content.startsWith(config.prefix + "ping")) { // When a player does '!ping'
-        msg.reply("Pong!") // The bot will say @Author, Pong!
-    }
-});
+//     if (msg.content.startsWith(config.prefix + "ping")) { // When a player does '!ping'
+//         msg.reply("Pong!") // The bot will say @Author, Pong!
+//     }
+// });
 
 
 puppeteer.launch({
@@ -60,7 +60,7 @@ async function ps5AvailabilityResult(browser) {
     {
         channel.send("PS5 Available at Best Buy! --> https://www.bestbuy.ca/en-ca/product/playstation-5-digital-edition-console-online-only/14962184");
     }else{
-        console.log("Best Buy PS5 - unavailable.")
+        //console.log("Best Buy PS5 - unavailable.")
     }
     //Send message if available at The Source
     if (await checkIfAvailableAtTheSource(page2)) 
@@ -69,7 +69,7 @@ async function ps5AvailabilityResult(browser) {
         channel.send("PS5 Available at The Source! -->  https://www.thesource.ca/en-ca/gaming/playstation/ps5/playstation%c2%ae5-digital-edition-console/p/108090498");
         
     }else{
-        console.log("The Source PS5 - unavailable.")
+        //console.log("The Source PS5 - unavailable.")
     }
 }
 /**
