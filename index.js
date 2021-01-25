@@ -9,7 +9,7 @@ puppeteer.use(StealthPlugin())
 const Discord = require("discord.js");
 const config = require("./config.json");
 require('dotenv').config();
-// const channel; 
+//const channel; 
 const client = new Discord.Client();
 
 client.login(process.env.BOT_TOKEN);
@@ -23,7 +23,7 @@ puppeteer.launch({
     console.log('Bot started...Checking PS5 stock')
     setInterval(async () => ps5AvailabilityResult(browser), 30000)
     await ps5AvailabilityResult(browser)
-    await browser.close();
+   
 })
 .catch((error) => {
     console.log(error)
@@ -55,12 +55,14 @@ async function ps5AvailabilityResult(browser) {
     //Send message if available at The Source
     if (await checkIfAvailableAtTheSource(page2)) 
     {
-        
         channel.send("PS5 Available at The Source! -->  https://www.thesource.ca/en-ca/gaming/playstation/ps5/playstation%c2%ae5-digital-edition-console/p/108090498");
         
     }else{
         console.log("The Source PS5 - unavailable.")
     }
+    page1.close();
+    page2.close();
+
 }
 /**
  * Best Buy Availability Checker
@@ -86,6 +88,7 @@ async function checkIfAvailableAtBestBuy(page) {
  * @param {} page 
  */
 async function checkIfAvailableAtTheSource(page) {
+    console.log("CHECK");
     const pageUrl = 'https://www.thesource.ca/en-ca/gaming/playstation/ps5/playstation%c2%ae5-digital-edition-console/p/108090498';
     const buttonElement = '.disabled-button'
     const outOfStockElement = ".outOfStock"
@@ -98,8 +101,10 @@ async function checkIfAvailableAtTheSource(page) {
     const outOfStockTagIsPresent = await page.$(outOfStockElement);
 
     if( !outOfStockTagIsPresent && !disabledTagIsPresent){
+        console.log("true");
         return true;
     }else{
+        console.log("false");
         return false;
     }
     //return disabledTagIsPresent ? false : true
