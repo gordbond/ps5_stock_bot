@@ -67,13 +67,13 @@ async function ps5AvailabilityResult(browser) {
         console.log("Best Buy PS5 - unavailable.")
     }
     //Send message if available at The Source
-    if (await checkIfAvailableAtTheSource(page2)) 
-    {
-        //channel.send("PS5 Available at The Source! -->  https://www.thesource.ca/en-ca/gaming/playstation/ps5/playstation%c2%ae5-digital-edition-console/p/108090498");
-        console.log("The Source PS5 AVAILABLE");
-    }else{
-        console.log("The Source PS5 - unavailable.")
-    }
+    // if (await checkIfAvailableAtTheSource(page2)) 
+    // {
+    //     //channel.send("PS5 Available at The Source! -->  https://www.thesource.ca/en-ca/gaming/playstation/ps5/playstation%c2%ae5-digital-edition-console/p/108090498");
+    //     console.log("The Source PS5 AVAILABLE");
+    // }else{
+    //     console.log("The Source PS5 - unavailable.")
+    // }
     //Send message if available at The Source
     if (await checkIfAvailableAtWalmart(page3)) {
         //channel.send("PS5 Available at Walmart! --> https://www.walmart.ca/en/video-games/playstation-5/ps5-consoles/N-9857");
@@ -105,6 +105,8 @@ async function checkIfAvailableAtBestBuy(page) {
     //Go to Best Buy PS5 URL
     await page.goto(pageUrl)
     
+    await page.waitForSelector(buttonElement);
+
     //True if disabled button class present
     const disabledTagIsPresent = await page.$(buttonElement)
     
