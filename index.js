@@ -88,7 +88,6 @@ async function checkIfAvailableAtBestBuy(page) {
  * @param {} page 
  */
 async function checkIfAvailableAtTheSource(page) {
-    console.log("CHECK");
     const pageUrl = 'https://www.thesource.ca/en-ca/gaming/playstation/ps5/playstation%c2%ae5-digital-edition-console/p/108090498';
     const buttonElement = '.disabled-button'
     const outOfStockElement = ".outOfStock"
