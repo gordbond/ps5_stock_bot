@@ -30,14 +30,21 @@ puppeteer.launch({
 })
 
 async function ps5AvailabilityResult(browser) {
-    const page1 = await browser.newPage()
-    const page2 = await browser.newPage()
+    const page1 = await browser.newPage();
+    const page2 = await browser.newPage();
+    const page3 = await browser.newPage();
+
     page1.setViewport({
         width: 1280,
         height: 800,
         isMobile: false,
     });
     page2.setViewport({
+        width: 1280,
+        height: 800,
+        isMobile: false,
+    });
+    page3.setViewport({
         width: 1280,
         height: 800,
         isMobile: false,
@@ -62,6 +69,7 @@ async function ps5AvailabilityResult(browser) {
     }
     page1.close();
     page2.close();
+    page3.close();
 
 }
 /**
@@ -78,8 +86,6 @@ async function checkIfAvailableAtBestBuy(page) {
     const disabledTagIsPresent = await page.$(buttonElement)
     //If disabled tag is present there are no ps5s available
     return disabledTagIsPresent ? false : true
-    //JUST FOR DEBUGGING
-    //return disabledTagIsPresent ? true : false
 }
 
 /**
@@ -91,28 +97,47 @@ async function checkIfAvailableAtTheSource(page) {
     const pageUrl = 'https://www.thesource.ca/en-ca/gaming/playstation/ps5/playstation%c2%ae5-digital-edition-console/p/108090498';
     const buttonElement = '.disabled-button'
     const outOfStockElement = ".outOfStock"
+    const pageNotAvailableElement = ".error-page-content error-404"
+
+
     //prevent captcha issues apparently  
     page.setJavaScriptEnabled(false)
     await page.goto(pageUrl)
     
+
     
     const disabledTagIsPresent = await page.$(buttonElement);
     const outOfStockTagIsPresent = await page.$(outOfStockElement);
+    const pageNotAvailable = await page.$(pageNotAvailableElement);
 
+    if(pageNotAvailable){
+        return false;
+    }
+    
     if( !outOfStockTagIsPresent && !disabledTagIsPresent){
         return true;
     }else{
         return false;
     }
-    //return disabledTagIsPresent ? false : true
-    //Just for debugging
-    //return disabledTagIsPresent ? true : false
    
 }
 
 
+// async function checkIfAvailableAtAmazon(page) {
+//     const pageUrl = 'https://www.amazon.ca/PlayStation-5-Console/dp/B08GSC5D9G/ref=sr_1_1?crid=1NHEJMYZU7YRF&dchild=1&keywords=ps5+console&qid=1611538419&sprefix=ps5%2Caps%2C178&sr=8-1';
+    
+//     const outOfStockText = ".outOfStock"
+//     //prevent captcha issues apparently  
+//     page.setJavaScriptEnabled(false)
 
-    //log(`BestBuy - ${await checkIfAvailableonWalMart(page) ? chalk.green('AVAILABLE') : chalk.red('UNAVAILABLE') }`)
-    // var messageFromBestBuy = `BestBuy - ${await checkIfAvailableAtBestBuy(page) ? 'AVAILABLE' : 'UNAVAILABLE'}`;
-    // channel.send(messageFromBestBuy);
-    //channel.send("Test");
+//     await page.goto(pageUrl)
+
+//     const outOfStockTextIsPresent = await page.$(outOfStockText);
+
+//     if (!outOfStockTextIsPresent) {
+//         return true;
+//     } else {
+//         return false;
+//     }
+
+// }
