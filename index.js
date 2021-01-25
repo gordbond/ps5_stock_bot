@@ -100,10 +100,8 @@ async function checkIfAvailableAtTheSource(page) {
     const outOfStockTagIsPresent = await page.$(outOfStockElement);
 
     if( !outOfStockTagIsPresent && !disabledTagIsPresent){
-        console.log("true");
         return true;
     }else{
-        console.log("false");
         return false;
     }
     //return disabledTagIsPresent ? false : true
