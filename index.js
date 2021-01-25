@@ -33,6 +33,7 @@ async function ps5AvailabilityResult(browser) {
     const page1 = await browser.newPage();
     const page2 = await browser.newPage();
     const page3 = await browser.newPage();
+    const page4 = await browser.newPage();
 
     page1.setViewport({
         width: 1280,
@@ -45,6 +46,11 @@ async function ps5AvailabilityResult(browser) {
         isMobile: false,
     });
     page3.setViewport({
+        width: 1280,
+        height: 800,
+        isMobile: false,
+    });
+    page4.setViewport({
         width: 1280,
         height: 800,
         isMobile: false,
@@ -67,9 +73,17 @@ async function ps5AvailabilityResult(browser) {
     }else{
         console.log("The Source PS5 - unavailable.")
     }
+    //Send message if available at The Source
+    if (await checkIfAvailableAtWalmart(page3)) {
+        channel.send("PS5 Available at Walmart! --> https://www.walmart.ca/en/video-games/playstation-5/ps5-consoles/N-9857");
+
+    } else {
+        console.log("Walmart PS5 - unavailable.")
+    }
     page1.close();
     page2.close();
     page3.close();
+    page4.close();
 
 }
 /**
@@ -94,29 +108,35 @@ async function checkIfAvailableAtBestBuy(page) {
  * @param {} page 
  */
 async function checkIfAvailableAtTheSource(page) {
+    
     const pageUrl = 'https://www.thesource.ca/en-ca/gaming/playstation/ps5/playstation%c2%ae5-digital-edition-console/p/108090498';
+    
     const buttonElement = '.disabled-button'
-    const outOfStockElement = ".outOfStock"
-    const pageNotAvailableElement = ".error-page-content error-404"
 
+    const outOfStockElement = ".outOfStock"
+
+    const pageNotAvailableElement = ".error-page-content"
 
     //prevent captcha issues apparently  
     page.setJavaScriptEnabled(false)
+
     await page.goto(pageUrl)
     
-
-    
     const disabledTagIsPresent = await page.$(buttonElement);
+
     const outOfStockTagIsPresent = await page.$(outOfStockElement);
+
     const pageNotAvailable = await page.$(pageNotAvailableElement);
 
     if(pageNotAvailable){
+        console.log("ERROR PAGE")
         return false;
     }
     
     if( !outOfStockTagIsPresent && !disabledTagIsPresent){
         return true;
     }else{
+        console.log("NO PS5")
         return false;
     }
    
@@ -141,3 +161,24 @@ async function checkIfAvailableAtTheSource(page) {
 //     }
 
 // }
+
+async function checkIfAvailableAtWalmart(page) {
+    const pageUrl ="https://www.walmart.ca/en/video-games/playstation-5/ps5-consoles/N-9857";
+    
+    const outOfStockRedirectUrl = "https://www.walmart.ca/en/ps5-xbox-xs-out-of-stock";
+   
+    //prevent captcha issues apparently  
+    page.setJavaScriptEnabled(false)
+
+    await page.goto(pageUrl);
+
+    const currentUrl = await page.url(); 
+
+    if (currentUrl === outOfStockRedirectUrl){
+        return false;
+    }else{
+        return true;
+    }
+
+
+}
