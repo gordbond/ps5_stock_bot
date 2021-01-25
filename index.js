@@ -61,7 +61,7 @@ async function ps5AvailabilityResult(browser) {
     // Send message if available at BestBuy
     if (await checkIfAvailableAtBestBuy(page1))
     {
-        channel.send("PS5 Available at Best Buy! --> https://www.bestbuy.ca/en-ca/product/playstation-5-digital-edition-console-online-only/14962184");
+        //channel.send("PS5 Available at Best Buy! --> https://www.bestbuy.ca/en-ca/product/playstation-5-digital-edition-console-online-only/14962184");
     }else{
         console.log("Best Buy PS5 - unavailable.")
     }
