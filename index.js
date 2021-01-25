@@ -68,7 +68,7 @@ async function ps5AvailabilityResult(browser) {
     //Send message if available at The Source
     if (await checkIfAvailableAtTheSource(page2)) 
     {
-        channel.send("PS5 Available at The Source! -->  https://www.thesource.ca/en-ca/gaming/playstation/ps5/playstation%c2%ae5-digital-edition-console/p/108090498");
+        //channel.send("PS5 Available at The Source! -->  https://www.thesource.ca/en-ca/gaming/playstation/ps5/playstation%c2%ae5-digital-edition-console/p/108090498");
         
     }else{
         console.log("The Source PS5 - unavailable.")
@@ -143,25 +143,30 @@ async function checkIfAvailableAtTheSource(page) {
 }
 
 
-// async function checkIfAvailableAtAmazon(page) {
-//     const pageUrl = 'https://www.amazon.ca/PlayStation-5-Console/dp/B08GSC5D9G/ref=sr_1_1?crid=1NHEJMYZU7YRF&dchild=1&keywords=ps5+console&qid=1611538419&sprefix=ps5%2Caps%2C178&sr=8-1';
+async function checkIfAvailableAtAmazon(page) {
+    const pageUrl = 'https://www.amazon.ca/Playstation-3005721-PlayStation-Digital-Edition/dp/B08GS1N24H/ref=sr_1_4?crid=2ICAJIPRBBOFY&dchild=1&keywords=ps5+digital+edition&qid=1611600707&s=videogames&sprefix=ps5+dig%2Cvideogames%2C158&sr=1-4';
     
-//     const outOfStockText = ".outOfStock"
-//     //prevent captcha issues apparently  
-//     page.setJavaScriptEnabled(false)
+    const outOfStockText = ".outOfStock"
+    //prevent captcha issues apparently  
+    page.setJavaScriptEnabled(false)
 
-//     await page.goto(pageUrl)
+    await page.goto(pageUrl)
 
-//     const outOfStockTextIsPresent = await page.$(outOfStockText);
+    const outOfStockTextIsPresent = await page.$(outOfStockText);
 
-//     if (!outOfStockTextIsPresent) {
-//         return true;
-//     } else {
-//         return false;
-//     }
+    if (!outOfStockTextIsPresent) {
+        return true;
+    } else {
+        return false;
+    }
 
-// }
+}
 
+/**
+ * Checks to see if Walmart has any PS5s in stock
+ * Checks to see if we are redirected to the out of stock page - if not send alert
+ * @param {*} page 
+ */
 async function checkIfAvailableAtWalmart(page) {
     const pageUrl ="https://www.walmart.ca/en/video-games/playstation-5/ps5-consoles/N-9857";
     
