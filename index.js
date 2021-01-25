@@ -61,6 +61,7 @@ async function ps5AvailabilityResult(browser) {
     // Send message if available at BestBuy
     if (await checkIfAvailableAtBestBuy(page1))
     {
+        console.log("Best Buy PS5 AVAILABLE");
         //channel.send("PS5 Available at Best Buy! --> https://www.bestbuy.ca/en-ca/product/playstation-5-digital-edition-console-online-only/14962184");
     }else{
         console.log("Best Buy PS5 - unavailable.")
@@ -69,14 +70,14 @@ async function ps5AvailabilityResult(browser) {
     if (await checkIfAvailableAtTheSource(page2)) 
     {
         //channel.send("PS5 Available at The Source! -->  https://www.thesource.ca/en-ca/gaming/playstation/ps5/playstation%c2%ae5-digital-edition-console/p/108090498");
-        
+        console.log("The Source PS5 AVAILABLE");
     }else{
         console.log("The Source PS5 - unavailable.")
     }
     //Send message if available at The Source
     if (await checkIfAvailableAtWalmart(page3)) {
-        channel.send("PS5 Available at Walmart! --> https://www.walmart.ca/en/video-games/playstation-5/ps5-consoles/N-9857");
-
+        //channel.send("PS5 Available at Walmart! --> https://www.walmart.ca/en/video-games/playstation-5/ps5-consoles/N-9857");
+        console.log("Walmart PS5 AVAILABLE");
     } else {
         console.log("Walmart PS5 - unavailable.")
     }
@@ -91,15 +92,29 @@ async function ps5AvailabilityResult(browser) {
  * @param {*} page 
  */
 async function checkIfAvailableAtBestBuy(page) {
+   
+    //Best Buy PS5 URL
     const pageUrl = 'https://www.bestbuy.ca/en-ca/product/playstation-5-digital-edition-console-online-only/14962184';
+    
+    //Disabled button selector
     const buttonElement = '.disabled_XY3i_'
+    
     //prevent captcha issues apparently  
     page.setJavaScriptEnabled(false) 
+
+    //Go to Best Buy PS5 URL
     await page.goto(pageUrl)
+    
     //True if disabled button class present
     const disabledTagIsPresent = await page.$(buttonElement)
+    
     //If disabled tag is present there are no ps5s available
-    return disabledTagIsPresent ? false : true
+    if(disabledTagIsPresent){
+        return false;
+    }else{
+        return true;
+    }
+    
 }
 
 /**
@@ -121,18 +136,18 @@ async function checkIfAvailableAtTheSource(page) {
     page.setJavaScriptEnabled(false)
 
     await page.goto(pageUrl)
+
+    const pageNotAvailable = await page.$(pageNotAvailableElement);
+
+    if (pageNotAvailable) {
+        console.log("ERROR PAGE")
+        return false;
+    }
     
     const disabledTagIsPresent = await page.$(buttonElement);
 
     const outOfStockTagIsPresent = await page.$(outOfStockElement);
 
-    const pageNotAvailable = await page.$(pageNotAvailableElement);
-
-    if(pageNotAvailable){
-        console.log("ERROR PAGE")
-        return false;
-    }
-    
     if( !outOfStockTagIsPresent && !disabledTagIsPresent){
         return true;
     }else{
