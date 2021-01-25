@@ -33,7 +33,7 @@ async function ps5AvailabilityResult(browser) {
     const page1 = await browser.newPage();
     const page2 = await browser.newPage();
     const page3 = await browser.newPage();
-    const page4 = await browser.newPage();
+    //const page4 = await browser.newPage();
 
     page1.setViewport({
         width: 1280,
@@ -50,11 +50,11 @@ async function ps5AvailabilityResult(browser) {
         height: 800,
         isMobile: false,
     });
-    page4.setViewport({
-        width: 1280,
-        height: 800,
-        isMobile: false,
-    });
+    // page4.setViewport({
+    //     width: 1280,
+    //     height: 800,
+    //     isMobile: false,
+    // });
     
     const channel = client.channels.cache.get(config.CHANNEL_ID);
     
@@ -83,7 +83,7 @@ async function ps5AvailabilityResult(browser) {
     page1.close();
     page2.close();
     page3.close();
-    page4.close();
+    //page4.close();
 
 }
 /**
