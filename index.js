@@ -103,9 +103,9 @@ async function checkIfAvailableAtBestBuy(page) {
     page.setJavaScriptEnabled(false) 
 
     //Go to Best Buy PS5 URL
-    await page.goto(pageUrl)
+    await page.goto(pageUrl, { waitUntil: 'domcontentloaded' })
     
-    await page.waitForSelector(buttonElement);
+    //await page.waitForSelector(buttonElement);
 
     //True if disabled button class present
     const disabledTagIsPresent = await page.$(buttonElement)
