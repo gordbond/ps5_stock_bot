@@ -152,8 +152,6 @@ async function checkIfAvailableAtTheSource(page) {
 
     const disabledTagIsPresent = await page.$(buttonElement);
 
-    const outOfStockTagIsPresent = await page.$(outOfStockElement);
-
     await page.waitForSelector(outOfStockElement);
 
     const outOfStockTagIsPresent = await page.$(outOfStockElement);
