@@ -139,6 +139,8 @@ async function checkIfAvailableAtTheSource(page) {
 
     await page.goto(pageUrl)
 
+    await page.waitForSelector(pageNotAvailableElement);
+
     const pageNotAvailable = await page.$(pageNotAvailableElement);
 
     if (pageNotAvailable) {
@@ -146,7 +148,13 @@ async function checkIfAvailableAtTheSource(page) {
         return false;
     }
     
+    await page.waitForSelector(buttonElement);
+
     const disabledTagIsPresent = await page.$(buttonElement);
+
+    const outOfStockTagIsPresent = await page.$(outOfStockElement);
+
+    await page.waitForSelector(outOfStockElement);
 
     const outOfStockTagIsPresent = await page.$(outOfStockElement);
 
