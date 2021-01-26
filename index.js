@@ -137,9 +137,9 @@ async function checkIfAvailableAtTheSource(page) {
     //prevent captcha issues apparently  
     page.setJavaScriptEnabled(false)
 
-    await page.goto(pageUrl)
+    await page.goto(pageUrl, { waitUntil: 'domcontentloaded' })
 
-    await page.waitForSelector(pageNotAvailableElement);
+    //await page.waitForSelector(pageNotAvailableElement);
 
     const pageNotAvailable = await page.$(pageNotAvailableElement);
 
@@ -148,11 +148,11 @@ async function checkIfAvailableAtTheSource(page) {
         return false;
     }
     
-    await page.waitForSelector(buttonElement);
+    //await page.waitForSelector(buttonElement);
 
     const disabledTagIsPresent = await page.$(buttonElement);
 
-    await page.waitForSelector(outOfStockElement);
+    //await page.waitForSelector(outOfStockElement);
 
     const outOfStockTagIsPresent = await page.$(outOfStockElement);
 
